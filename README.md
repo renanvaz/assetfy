@@ -1,29 +1,34 @@
-# Assetfy (For Starling Framework)
+# Assetfy (for (Starling Framework)[https://github.com/PrimaryFeather/Starling-Framework])
 Assetfy is a open source library that converts flash DisplayObjectContainer into Starling data object formats.
+Work with filters!
+Work with color effects!
+Work with color matrix!
+Work, work, WORK!...
 
 ## Requirements
-Assetfy uses the com.adobe.images package of [as3corelib](https://github.com/mikechambers/as3corelib).
+You need to add the Starling lib in your project.
+Tested on Starling 1.4.1
+
+## Info
+The content drawable position have be x/y = 0.
+If you have a mask on the content, you have to set a MovieClip named "crop" as masker.
 
 ## Project
     types
-        Bitmap // Flaten container and converts to Starling Bitmap Object
+        Bitmap // Flaten container and converts to Bitmap Object
         Image // Flaten container and converts to Starling Image Object
-        MovieClip // Converts Flash MovieClip into Starling MovieClips Object
-            - frame (frame-number / label name)
-            - loop (animation name, mode [reverse, normal])
-            - play (animation name, mode [reverse, normal])
-            - stop ()
-            - set/get FPS
-            - add (SheetData)
+        Texture // Flaten container and converts to Starling Texture Object
+        TextureAtlas // Flaten container and converts to Starling TextureAtlas Object
+        Assetfy MovieClip // Converts Flash MovieClip into Assetfy MovieClip Object (Saves a lot of memory!)
 
     Classes
-        Bitmap
         MovieClip
             - frame (frame-number / label name)
             - loop (animation name, mode [reverse, normal])
-            - play (animation name, mode [reverse, normal])
+            - play (animation name, [[mode [reverse, normal] | onComplete], onComplete])
             - stop ()
             - add (SheetData)
+            - set/get FPS
         MovieClipData
             - name
             - frames (array | frame number from, frame number to)
