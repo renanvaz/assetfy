@@ -1,6 +1,10 @@
 # Assetfy (For Starling Framework)
-Assetfy is a open source library thet converts flash MobieClips into Starling data object formats.
+Assetfy is a open source library that converts flash DisplayObjectContainer into Starling data object formats.
 
+## Requirements
+Assetfy uses the com.adobe.images package of [as3corelib](https://github.com/mikechambers/as3corelib).
+
+## Project
     types
         Bitmap // Flaten container and converts to Starling Bitmap Object
         Image // Flaten container and converts to Starling Image Object
