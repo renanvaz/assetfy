@@ -1,4 +1,4 @@
-# Assetfy (for (Starling Framework)[https://github.com/PrimaryFeather/Starling-Framework])
+# Assetfy for (Starling Framework)[https://github.com/PrimaryFeather/Starling-Framework]
 Assetfy is a open source library that converts flash DisplayObjectContainer into Starling data object formats.
 Work with filters!
 Work with color effects!
