@@ -1,13 +1,18 @@
 ﻿package assetfy {
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
 	import flash.display.MovieClip;
-    import flash.display.Sprite;
-    import flash.display.Bitmap;
-    import flash.display.BitmapData;
+	import flash.display.Sprite;
+	import flash.geom.Matrix;
+	import flash.geom.Rectangle;
 
-    import starling.core.Starling;
-    import starling.display.Image;
-    import starling.textures.TextureAtlas;
-    import starling.textures.Texture;
+	import assetfy.classes.AssetfyMovieClip;
+	import assetfy.utils.StringHelper;
+
+	import starling.core.Starling;
+	import starling.display.Image;
+	import starling.textures.Texture;
+	import starling.textures.TextureAtlas;
 
     public class Assetfy {
         public static const types:Object = {
@@ -18,6 +23,8 @@
             ASSETFY_MOVIECLIP:  'assetfy_movieclip'
         }
 
+        public static var padding:int = 6;
+
         public function Assetfy() {}
 
         public static function content ():Object {
@@ -27,30 +34,43 @@
         public static function me (container:MovieClip, type:String = 'bitmap'):* {
             switch (type) {
                 case Assetfy.types.ASSETFY_MOVIECLIP:
-                    return false;
+                    return new AssetfyMovieClip(Assetfy.getArrayFrames(container));
                 break;
                 case Assetfy.types.TEXTURE_ATLAS:
-                    var atlas:String = '';
-                    /*'<TextureAtlas>
-                        <SubTexture name="flight_00" x="0"   y="0" width="50" height="50" />
-                        <SubTexture name="flight_01" x="50"  y="0" width="50" height="50" />
-                        <SubTexture name="flight_02" x="100" y="0" width="50" height="50" />
-                        <SubTexture name="flight_03" x="150" y="0" width="50" height="50" />
-                    </TextureAtlas>';*/
+                    var map:Object = Assetfy.toSpriteSheet(container),
+                        xmlText:String = '';
 
-                    //var xml:XML = XML(atlas);
-                    return Assetfy.allFramesToBitmap(container);
+                    for each(var i:Object in map.coordinates){
+                        xmlText += '<SubTexture name="' + i.name +'" x="' + i.x +'" y="' + i.y +'" width="' + i.width +'" height="' + i.height +'" frameX="' + i.frameX +'" frameY="' + i.frameY +'" frameWidth="' + i.frameWidth +'" frameHeight="' + i.frameHeight +'" />';
+                    }
+
+                    xmlText = '<TextureAtlas>' + xmlText + '</TextureAtlas>';
+
+                    trace('Texture size: ', map.bm.width, map.bm.height);
+
+                    return new TextureAtlas(Texture.fromBitmap(map.bm, false, false, Starling.contentScaleFactor), XML(xmlText));
                 break;
                 case Assetfy.types.IMAGE:
-                    return Image.fromBitmap(Assetfy.toBitmap(container), false, Starling.contentScaleFactor);
+                    return Image.fromBitmap(Assetfy.toBitmap(container).bm, false, Starling.contentScaleFactor);
                 break;
                 case Assetfy.types.TEXTURE:
-                    return Texture.fromBitmap(Assetfy.toBitmap(container), false, false, Starling.contentScaleFactor);
+                    return Texture.fromBitmap(Assetfy.toBitmap(container).bm, false, false, Starling.contentScaleFactor);
                 break;
                 default: // Default is Assetfy.types.BITMAP
-                    return Assetfy.toBitmap(container);
+                    return Assetfy.toBitmap(container).bm;
                 break;
             }
+        }
+
+        private static function getArrayFrames (container:MovieClip):Vector.<Object> {
+            var c:Vector.<Object> = new Vector.<Object>();
+
+            for (var i:int = 0; i < container.totalFrames; i++) {
+                container.gotoAndStop(i + 1);
+                c.push(Assetfy.toBitmap(container));
+            }
+
+            return c;
         }
 
         /**
@@ -59,71 +79,90 @@
          * @return  {bm:Bitmap, coordinates:Object }
          *                      coordinates {x: 0, y: 0, width: 0, height: 0}
          */
-        private static function allFramesToBitmap (container:MovieClip):Object {
+        private static function toSpriteSheet (container:MovieClip):Object {
             var c:Vector.<Object>   = new Vector.<Object>(),
-                limitX:int          = 7,
-				_w:Number			= 0,
-				_h:Number			= 0,
-				w:Number			= 0,
-				h:Number			= 0,
+                limitX:int          = Math.ceil(Math.sqrt(container.totalFrames)),
+                x:Number            = 0,
+                y:Number            = 0,
+                wMax:Number         = 0,
+                hMax:Number         = 0,
+                wMaxFrame:Number    = 0,
+                hMaxFrame:Number    = 0,
+                yIndex:int          = 0,
+                rowHMax:int         = 0,
                 mc:MovieClip        = new MovieClip,
-                bm:Bitmap;
-			
-			// Issue: create a mosaic logic
-			
+                data:Object,
+                bm:Bitmap,
+                name:String;
+
+            // Feature: create a mosaic logic (retalgle packing)
+
             for (var i:int = 0; i < container.totalFrames; i++) {
                 container.gotoAndStop(i + 1);
-				
-				_w = container.width;
-				_h = container.height;
-				
-				if(container.hasOwnProperty('crop')){
-					_w = container.crop.width;
-					_h = container.crop.height;
-				}
-				
-                w = Math.max(_w, w);
-				h = Math.max(_h, h);
+
+                wMax = Math.ceil(Math.max(container.width, wMax));
+                hMax = Math.ceil(Math.max(container.height, hMax));
             }
+
+            if(limitX * wMax > 2048){ limitX = Math.floor(2048 / wMax); }
 
             for (i = 0; i < container.totalFrames; i++) {
                 container.gotoAndStop(i + 1);
-                bm = Assetfy.toBitmap(container);
+                data = Assetfy.toBitmap(container);
 
-                bm.x = ((i%limitX) * w);
-                bm.y = (Math.floor(i/limitX) * h);
+                if(yIndex != Math.floor(i/limitX)){
+                    yIndex = Math.floor(i/limitX);
+
+                    x = 0;
+                    y += rowHMax + Assetfy.padding;
+                    rowHMax = 0;
+                }
+
+                bm = data.bm;
+                bm.x = x;
+                bm.y = y;
                 mc.addChild(bm);
 
-                c.push({x: bm.x, y: bm.y, width: bm.width, height: bm.height});
-            }
-			
-            bm = Assetfy.toBitmap(mc);
+                x += bm.width + Assetfy.padding;
+                rowHMax = Math.max(rowHMax, bm.height);
 
-            return {bm: bm, coordinates: c};
+
+                // Issue: How to calculate frameX and frameY?
+                c.push({name: data.name, x: bm.x, y: bm.y, width: bm.width, height: bm.height, frameX: Math.ceil((bm.width - wMax) / 2), frameY: Math.ceil((bm.height - hMax) / 2), frameWidth: wMax, frameHeight: hMax});
+            }
+
+            data = Assetfy.toBitmap(mc);
+
+            return {bm: data.bm, coordinates: c};
         }
 
-        private static function toBitmap (container:MovieClip):Bitmap {
-            var w:Number = container.width,
-                h:Number = container.height,
+        private static function toBitmap (container:MovieClip):Object {
+            var w:Number = Math.ceil(container.width),
+                h:Number = Math.ceil(container.height),
                 s:Sprite =  new Sprite,
                 bm:Bitmap,
-                bmd:BitmapData;
+                bmd:BitmapData,
+                rect:Rectangle,
+                name:String;
 
-            if(container.hasOwnProperty('crop')){
-                w = container.crop.width;
-                h = container.crop.height;
-            }
-			
 			container.x = container.y = 0;
 
             s.addChild(container);
 
-            bmd = new BitmapData(w, h, false, 0x00000000);
-            bmd.draw(s);
+            rect = container.getRect(container);
+            rect.x *= container.scaleX;
+            rect.y *= container.scaleY;
+
+            bmd = new BitmapData(w, h, true, 0x00000000);
+            bmd.draw(s, new Matrix(1, 0, 0, 1, -rect.x, -rect.y));
 
             bm = new Bitmap(bmd);
+            bm.smoothing = true;
 
-            return bm;
+            name = StringHelper.padLeft(container.currentFrame.toString(), '0', 3);
+            name = container.currentLabel ? container.currentLabel + '_' + name : 'default_' + name;
+
+            return {bm: bm, name: name, frame: container.currentFrame, label: container.currentLabel, coordinates: {pivotX: rect.x, pivotY: rect.y}};
         }
 
     }

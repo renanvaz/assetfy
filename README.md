@@ -9,10 +9,6 @@ Work, work, WORK!...
 You need to add the Starling lib in your project.
 Tested on Starling 1.4.1
 
-## Info
-The content drawable position have be x/y = 0.
-If you have a mask on the content, you have to set a MovieClip named "crop" as masker.
-
 ## Project
     types
         Bitmap // Flaten container and converts to Bitmap Object
