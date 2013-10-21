@@ -1,4 +1,4 @@
-package assetfy.classes {
+package assetfy.display {
 
     import starling.animation.IAnimatable;
     import starling.core.Starling;
@@ -15,7 +15,6 @@ package assetfy.classes {
         private var _mode:String            = '';
         private var _view:Image;
 		private var _onComplete:Function;
-
 
         public var fps:int = Starling.current.nativeStage.frameRate;
         public var index:int = 0;

@@ -22,13 +22,13 @@
 			
 			Masonry.organize(childs);*/
 			
-			/*var b = Assetfy.me(mcToConvert, Assetfy.types.TEXTURE_ATLAS);
+			var b = Assetfy.me(mcToConvert, Assetfy.types.TEXTURE_ATLAS);
 			
 			b = b.bm;
 			b.x = 0;
 			b.y = 0;
 			
-			addChild(b);*/
+			addChild(b);
 			
 		}
 	}

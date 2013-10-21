@@ -6,7 +6,7 @@
 	import flash.geom.Matrix;
 	import flash.geom.Rectangle;
 
-	import assetfy.classes.AssetfyMovieClip;
+	import assetfy.display.AssetfyMovieClip;
 	import assetfy.utils.StringHelper;
 
 	import starling.core.Starling;
