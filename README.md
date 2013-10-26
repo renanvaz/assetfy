@@ -127,7 +127,7 @@ AssetfyMovieClip has a personal API, so there is no risk of confusion with the S
 Assetfy uses the label property to assign TextureAtlas and AssetfyMovieClip animations, if the label property is not set, Assetfy will use the name as "default".
 
 
-## Starling normal workflow comparation
+## Starling normal workflow comparison
 
 ```actionscript
 // Without Assetfy
