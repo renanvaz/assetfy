@@ -127,8 +127,6 @@
                 x += bm.width + Assetfy.padding;
                 rowHMax = Math.max(rowHMax, bm.height);
 
-
-                // Issue: How to calculate frameX and frameY?
                 c.push({name: data.name, x: bm.x, y: bm.y, width: bm.width, height: bm.height, frameX: -data.coordinates.pivotX, frameY: -data.coordinates.pivotY, frameWidth: wMax, frameHeight: hMax});
             }
 
