@@ -170,3 +170,6 @@ assetfyMc.play('default').onComplete(function():void { trace('Animation complete
 
 addChild(assetfyMc);
 ```
+
+
+### Imagine to play 2 animations in sequence...
