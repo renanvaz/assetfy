@@ -153,6 +153,9 @@ Assetfy uses the label property to assign TextureAtlas and AssetfyMovieClip anim
     var ta:TextureAtlas         = Assetfy.me(mc, Assetfy.types.TEXTURE_ATLAS);
     var starlingMc:MovieClip    = new MovieClip(ta.getTextures('default'), Starling.current.nativeStage.frameRate);
 
+    starlingMc.loop = false;
+    starlingMc.addEventListener(Event.COMPLETE, function(){ trace('Animation complete') });
+
     Starling.juggler.add(starlingMc);
 
     addChild(starlingMc);
