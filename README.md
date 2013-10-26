@@ -3,10 +3,10 @@ Assetfy is a open source library that converts flash MovieClip into Starling obj
 You can do your animations with Flash Professional IDE and exports SWF or a SWC file to use in your Starling project.
 
 ##### Why should i convert a Flash MovieClip instead of using the standard workflow of Starling?
--Flash MovieClip can be drawn with vectors.
--Flash MovieClip can contain action script in their frames.
--Flash MovieClip can contain effects, filters and color corrections.
--You only need to change your MovieClip animation and export it again... Is not necessary to generate SpriteSheet Bitmap and XML to import in Starling.
+    -Flash MovieClip can be drawn with vectors.
+    -Flash MovieClip can contain action script in their frames.
+    -Flash MovieClip can contain effects, filters and color corrections.
+    -You only need to change your MovieClip animation and export it again... Is not necessary to generate SpriteSheet Bitmap and XML to import in Starling.
 
 ## Its easy! Its simple! Its awesome!
 
