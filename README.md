@@ -60,22 +60,22 @@ Assetfy.types.ASSETFY_MOVIECLIP
 ### The Assetfy.me method
 
 ```actionscript
-var mc:MyFlashMovieClip         = new MyFlashMovieClip;
+var mc:MyFlashMovieClip = new MyFlashMovieClip;
 
 // Converts all the frames to a Assetfy AssetfyMovieClip (Best performance in a simple and wonderfull API)
-var assetfyMc:AssetfyMovieClip  = Assetfy.me(mc, Assetfy.types.ASSETFY_MOVIECLIP);
+var assetfyMc:AssetfyMovieClip = Assetfy.me(mc, Assetfy.types.ASSETFY_MOVIECLIP);
 
 // Converts all the frames to a Starling TextureAtlas (Sprite Texture and XML coordinates)
-var ta:TextureAtlas             = Assetfy.me(mc, Assetfy.types.TEXTURE_ATLAS);
+var ta:TextureAtlas = Assetfy.me(mc, Assetfy.types.TEXTURE_ATLAS);
 
 // Converts the current frame to a Starling Image
-var Image:Image                 = Assetfy.me(mc, Assetfy.types.IMAGE);
+var Image:Image = Assetfy.me(mc, Assetfy.types.IMAGE);
 
 // Converts the current frame to a Starling Texture
-var t:Texture                   = Assetfy.me(mc, Assetfy.types.TEXTURE);
+var t:Texture = Assetfy.me(mc, Assetfy.types.TEXTURE);
 
 // Converts the current frame to a Flash Bitmap
-var bm:Bitmap                   = Assetfy.me(mc, Assetfy.types.BITMAP);
+var bm:Bitmap = Assetfy.me(mc, Assetfy.types.BITMAP);
 ```
 
 ### The Assetfy.childs method
