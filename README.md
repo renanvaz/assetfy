@@ -5,7 +5,7 @@ You can do your animations with Flash Professional IDE and exports SWF or a SWC 
 ##### Why should i convert a Flash MovieClip instead of using the standard workflow of Starling?
 - Flash MovieClip can be drawn with vectors. Resize!
 - Flash MovieClip can contain action script in their frames.
-- Flash MovieClip can contain effects, filters and color corrections.
+- Flash MovieClip can contain effects, filters and color corrections. In the end it will become a single Bitmap.
 - You only need to change your MovieClip animation and export it again... Is not necessary to generate SpriteSheet Bitmap and XML to import in Starling.
 
 ## Its easy! Its simple! Its awesome!
