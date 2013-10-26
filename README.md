@@ -58,11 +58,21 @@ returnType values
 
 ```actionscript
     var mc:MyFlashMovieClip         = new MyFlashMovieClip;
-    var assetfyMc:AssetfyMovieClip  = Assetfy.me(mc, Assetfy.types.ASSETFY_MOVIECLIP);  // Converts all the frames to a Assetfy AssetfyMovieClip (Best performance in a simple and wonderfull API)
-    var ta:TextureAtlas             = Assetfy.me(mc, Assetfy.types.TEXTURE_ATLAS);      // Converts all the frames to a Starling TextureAtlas (Sprite Texture and XML coordinates)
-    var Image:Image                 = Assetfy.me(mc, Assetfy.types.IMAGE);              // Converts the current frame to a Starling Image
-    var t:Texture                   = Assetfy.me(mc, Assetfy.types.TEXTURE);            // Converts the current frame to a Starling Texture
-    var bm:Bitmap                   = Assetfy.me(mc, Assetfy.types.BITMAP);             // Converts the current frame to a Flash Bitmap
+
+    // Converts all the frames to a Assetfy AssetfyMovieClip (Best performance in a simple and wonderfull API)
+    var assetfyMc:AssetfyMovieClip  = Assetfy.me(mc, Assetfy.types.ASSETFY_MOVIECLIP);
+
+    // Converts all the frames to a Starling TextureAtlas (Sprite Texture and XML coordinates)
+    var ta:TextureAtlas             = Assetfy.me(mc, Assetfy.types.TEXTURE_ATLAS);
+
+    // Converts the current frame to a Starling Image
+    var Image:Image                 = Assetfy.me(mc, Assetfy.types.IMAGE);
+
+    // Converts the current frame to a Starling Texture
+    var t:Texture                   = Assetfy.me(mc, Assetfy.types.TEXTURE);
+
+    // Converts the current frame to a Flash Bitmap
+    var bm:Bitmap                   = Assetfy.me(mc, Assetfy.types.BITMAP);
 ```
 
 ### The Assetfy.childs method
@@ -83,7 +93,9 @@ returnType values
     assetfyMc.play('animation_name', 24);
 
     // You can play a animation once with a callback
-    assetfyMc.play('animation_name', 24).onComplete(function():void { trace('Animation complete!'); });
+    assetfyMc
+        .play('animation_name', 24)
+        .onComplete(function():void { trace('Animation complete!'); });
 
     /**
      * assetfyMc.loop(label:String [, fps:int]):void
@@ -139,7 +151,7 @@ Assetfy uses the label property to assign TextureAtlas and AssetfyMovieClip anim
     // With Assetfy (You can embed SWF from code, SWC file or load a external file)
     var mc:MyFlashMovieClip     = new MyFlashMovieClip;
     var ta:TextureAtlas         = Assetfy.me(mc, Assetfy.types.TEXTURE_ATLAS);
-    var starlingMc:MovieClip    = new MovieClip(ta.getTextures('default'), Starling.current.nativeStage.frameRate); // Starling MovieClip
+    var starlingMc:MovieClip    = new MovieClip(ta.getTextures('default'), Starling.current.nativeStage.frameRate);
 
     Starling.juggler.add(starlingMc);
 
