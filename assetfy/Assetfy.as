@@ -28,7 +28,9 @@
         public function Assetfy() {}
 
         public static function content ():Object {
-            return {};
+            return {
+                mcToConvert:
+            };
         }
 
         public static function me (container:MovieClip, type:String = 'bitmap'):* {
@@ -45,8 +47,6 @@
                     }
 
                     xmlText = '<TextureAtlas>' + xmlText + '</TextureAtlas>';
-
-                    trace('Texture size: ', map.bm.width, map.bm.height);
 
                     return new TextureAtlas(Texture.fromBitmap(map.bm, false, false, Starling.contentScaleFactor), XML(xmlText));
                 break;

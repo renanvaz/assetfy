@@ -13,15 +13,26 @@ package assetfy.display {
         private var _stopped:Boolean        = true;
         private var _loop:Boolean           = false;
         private var _mode:String            = '';
+        private var _fps:int                = 0;
+        private var _fpsToTime:int          = 0;
         private var _view:Image;
 		private var _onComplete:Function;
 
-        public var fps:int = Starling.current.nativeStage.frameRate;
         public var index:int = 0;
         public var animation:String = '';
 
+        public function get fps () {
+            return this._fps;
+        }
 
-        public function AssetfyMovieClip (frames:Vector.<Object>) {
+        public function set fps (v) {
+            this._fps = v;
+            this._timeLimit = (1 / this._fps);
+        }
+
+        public function AssetfyMovieClip (frames:Vector.<Object>, fps:int = 0) {
+            this.fps = fps > 0 ? fps : Starling.current.nativeStage.frameRate;
+
             var name:String;
             for (var i:int = 0; i < frames.length; i++) {
                 name = frames[i].label ? frames[i].label : 'default';
@@ -91,7 +102,9 @@ package assetfy.display {
         public function advanceTime(passedTime:Number):void {
             this._totalPassedTime += passedTime;
 
-            if(this._totalPassedTime > (1 / this.fps)){
+            var diffTime:Number = this._totalPassedTime - this._timeLimit;
+
+            if (diffTime >= 0) {
                 this._totalPassedTime = 0;
 
                 this.index++;
@@ -105,11 +118,13 @@ package assetfy.display {
 
 					if (this._onComplete) { this._onComplete.call(this); }
                 }
-            }else{
+
+                if (diffTime > 0) {
+                    this.advanceTime(diffTime);
+                }
+            } else {
                 return;
             }
-
-            // Verify what is the carryOverTime in Starling Tween class
         }
     }
 
