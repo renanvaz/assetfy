@@ -81,7 +81,7 @@ var bm:Bitmap = Assetfy.me(mc, Assetfy.types.BITMAP);
 ### The Assetfy.childs method
     // Documentation is comming...
 
-### The AssetfyMovieClip object
+### The AssetfyMovieClip object (minimalist API)
 ```actionscript
 // You can set the FPS at anytime
 assetfyMc.fps = 60; // A integer number of indicate the FPS of the AssetfyMovieClip
