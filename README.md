@@ -19,8 +19,7 @@ You can do your animations with Flash Professional IDE and exports SWF or a SWC 
 
     addChild(starlingMc);
 
-
-## Features
+### Features
 You can convert the MovieClip to any formats:
     Bitmap              (flash.dysplay.Bitmap)
     Texture             (starling.textures.Texture)
@@ -28,18 +27,20 @@ You can convert the MovieClip to any formats:
     TextureAtlas        (starling.textures.TextureAtlas)
     AssetfyMovieClip    (assetfy.display.AssetfyMovieClip)
 
-## Requirements
+### Requirements
 You need to add the Starling lib in your project.
 Tested on Starling 1.4.1
 
 ## Documentation
 
 ### Methods
-The Assetfy class have 2 statics methods:
+The Assetfy class have 2 statics methods
+
     Assetfy.me(mc:MovieClip, returnType:String);
     Assetfy.childs(container:DisplayObjectContainer);
 
 returnType values
+
     Assetfy.types.BITMAP
     Assetfy.types.TEXTURE
     Assetfy.types.IMAGE
