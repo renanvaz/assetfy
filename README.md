@@ -3,6 +3,8 @@ Assetfy is a open source library that converts flash MovieClip into Starling obj
 You can do your animations with Flash Professional IDE and exports SWF or a SWC file to use in your Starling project.
 
 ## Its easy! Its simple! Its awesome!
+
+```actionscript
     // AssetfyMovieClip Example
     var mc:MyFlashMovieClip         = new MyFlashMovieClip;
     var assetfyMc:AssetfyMovieClip  = Assetfy.me(mc, Assetfy.types.ASSETFY_MOVIECLIP);
@@ -18,6 +20,7 @@ You can do your animations with Flash Professional IDE and exports SWF or a SWC 
     Starling.juggler.add(starlingMc);
 
     addChild(starlingMc);
+```
 
 ### Features
 You can convert the MovieClip to any formats:
@@ -36,29 +39,37 @@ Tested on Starling 1.4.1
 ### Methods
 The Assetfy class have 2 statics methods
 
+```actionscript
     Assetfy.me(mc:MovieClip, returnType:String);
     Assetfy.childs(container:DisplayObjectContainer);
+```
 
 returnType values
 
+```actionscript
     Assetfy.types.BITMAP
     Assetfy.types.TEXTURE
     Assetfy.types.IMAGE
     Assetfy.types.TEXTURE_ATLAS
     Assetfy.types.ASSETFY_MOVIECLIP
+```
 
 ### The Assetfy.me method
+
+```actionscript
     var mc:MyFlashMovieClip         = new MyFlashMovieClip;
     var assetfyMc:AssetfyMovieClip  = Assetfy.me(mc, Assetfy.types.ASSETFY_MOVIECLIP);  // Converts all the frames to a Assetfy AssetfyMovieClip (Best performance in a simple and wonderfull API)
     var ta:TextureAtlas             = Assetfy.me(mc, Assetfy.types.TEXTURE_ATLAS);      // Converts all the frames to a Starling TextureAtlas (Sprite Texture and XML coordinates)
     var Image:Image                 = Assetfy.me(mc, Assetfy.types.IMAGE);              // Converts the current frame to a Starling Image
     var t:Texture                   = Assetfy.me(mc, Assetfy.types.TEXTURE);            // Converts the current frame to a Starling Texture
     var bm:Bitmap                   = Assetfy.me(mc, Assetfy.types.BITMAP);             // Converts the current frame to a Flash Bitmap
+```
 
 ### The Assetfy.childs method
     // Documentation is comming...
 
 ### The AssetfyMovieClip object
+```actionscript
     // You can set the FPS at anytime
     assetfyMc.fps = 60; // A integer number of indicate the FPS of the AssetfyMovieClip
 
@@ -68,7 +79,7 @@ returnType values
     // You can play a animation once
     assetfyMc.play('animation_name');
 
-    // You can play a animation and set the FPS
+    // You can play a animation once and set the FPS
     assetfyMc.play('animation_name', 24);
 
     // You can play a animation once with a callback
@@ -92,6 +103,7 @@ returnType values
 
     // You can stop the current animation (reset frame index)
     assetfyMc.stop();
+```
 
 ### Why AssetfyMovieClip is not simply called MoiveClip?
 AssetfyMovieClip has a personal API, so there is no risk of confusion with the Starling MovieClip instance and API.
@@ -101,6 +113,8 @@ Assetfy uses the label property to assign TextureAtlas and AssetfyMovieClip anim
 
 
 ## Starling normal workflow comparation
+
+```actionscript
     // Without Assetfy
     [Embed(source="atlas.xml", mimeType="application/octet-stream")]
     public static const AtlasXml:Class;
@@ -137,4 +151,4 @@ Assetfy uses the label property to assign TextureAtlas and AssetfyMovieClip anim
     assetfyMc.play('default').onComplete(function():void { trace('Animation complete!'); });
 
     addChild(assetfyMc);
-
+```
