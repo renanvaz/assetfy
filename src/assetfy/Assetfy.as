@@ -8,7 +8,7 @@
 	import flash.geom.Rectangle;
 
 	import assetfy.display.AssetfyMovieClip;
-	import assetfy.utils.StringHelper;
+	import assetfy.util.StringHelper;
 
 	import starling.core.Starling;
 	import starling.display.Image;
@@ -16,7 +16,7 @@
 	import starling.textures.TextureAtlas;
 
     public class Assetfy {
-        public static const types:Object = {
+        public static const type:Object = {
             BITMAP:             'bitmap',
             TEXTURE:            'texture',
             IMAGE:              'image',
@@ -36,10 +36,10 @@
 
         public static function me (mc:MovieClip, type:String = 'bitmap'):* {
             switch (type) {
-                case Assetfy.types.ASSETFY_MOVIECLIP:
+                case Assetfy.type.ASSETFY_MOVIECLIP:
                     return new AssetfyMovieClip(Assetfy.getArrayFrames(mc));
                 break;
-                case Assetfy.types.TEXTURE_ATLAS:
+                case Assetfy.type.TEXTURE_ATLAS:
                     var map:Object = Assetfy.toSpriteSheet(mc),
                         xmlText:String = '';
 
@@ -51,13 +51,13 @@
 
                     return new TextureAtlas(Texture.fromBitmap(map.bm, false, false, Starling.contentScaleFactor), XML(xmlText));
                 break;
-                case Assetfy.types.IMAGE:
+                case Assetfy.type.IMAGE:
                     return Image.fromBitmap(Assetfy.toBitmap(mc).bm, false, Starling.contentScaleFactor);
                 break;
-                case Assetfy.types.TEXTURE:
+                case Assetfy.type.TEXTURE:
                     return Texture.fromBitmap(Assetfy.toBitmap(mc).bm, false, false, Starling.contentScaleFactor);
                 break;
-                default: // Default is Assetfy.types.BITMAP
+                default: // Default is Assetfy.type.BITMAP
                     return Assetfy.toBitmap(mc).bm;
                 break;
             }

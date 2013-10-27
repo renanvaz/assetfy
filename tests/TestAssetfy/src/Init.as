@@ -19,26 +19,26 @@ package
 		}
 		
 		public function onAdded():void {
-			var test:String = Assetfy.types.TEXTURE_ATLAS;
+			var test:String = Assetfy.type.ASSETFY_MOVIECLIP;
 			var mc:MCExample = new MCExample;
 			var m:*;
 			
 			switch(test) {
-				case Assetfy.types.ASSETFY_MOVIECLIP:
-					m = Assetfy.me(mc, Assetfy.types.ASSETFY_MOVIECLIP);
+				case Assetfy.type.ASSETFY_MOVIECLIP:
+					m = Assetfy.me(mc, Assetfy.type.ASSETFY_MOVIECLIP);
 					m.x = m.y = Starling.current.stage.stageWidth/2;
 					addChild(m);
 					
-					// m.play('default').onComplete(function():void { trace('Terminou'); });
-					m.loop('default');
+					m.play('default').onComplete(function():void { trace('Animation complete'); });
+					// m.loop('default');
 				break;
-				case Assetfy.types.TEXTURE_ATLAS:
-					var t:TextureAtlas = Assetfy.me(mc, Assetfy.types.TEXTURE_ATLAS);
+				case Assetfy.type.TEXTURE_ATLAS:
+					var t:TextureAtlas = Assetfy.me(mc, Assetfy.type.TEXTURE_ATLAS);
 					m = new MovieClip(t.getTextures('default'), Starling.current.nativeStage.frameRate);
 					m.x = m.y = Starling.current.stage.stageWidth/2;
 					m.loop = false;
 					
-					m.addEventListener(Event.COMPLETE, function(){ trace('Animation complete') });
+					m.addEventListener(Event.COMPLETE, function():void { trace('Animation complete') });
 					
 					Starling.juggler.add(m);
 					addChild(m);
