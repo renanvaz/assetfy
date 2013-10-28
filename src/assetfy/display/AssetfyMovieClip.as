@@ -1,19 +1,22 @@
 package assetfy.display {
+    import flash.geom.Rectangle;
+	import flash.utils.Dictionary;
 
     import starling.animation.IAnimatable;
     import starling.core.Starling;
+    import starling.textures.Texture;
     import starling.display.Image;
-    import starling.display.Sprite;
 
-    public class AssetfyMovieClip extends Sprite implements IAnimatable {
+    public class AssetfyMovieClip extends Image implements IAnimatable {
 
-        private var _data:Object            = {};
+        private static var _data:Dictionary = new Dictionary;
         private var _totalPassedTime:Number = 0;
         private var _stopped:Boolean        = true;
         private var _loop:Boolean           = false;
         private var _mode:String            = '';
         private var _fps:int                = 0;
         private var _timeLimit:Number       = 0;
+        private var _id:String;
         private var _view:Image;
 		private var _onComplete:Function;
 
@@ -29,22 +32,51 @@ package assetfy.display {
             this._timeLimit = (1 / this._fps);
         }
 
-        public function AssetfyMovieClip (frames:Vector.<Object>, fps:int = 0) {
-            this.fps = fps > 0 ? fps : Starling.current.nativeStage.frameRate;
+        public function AssetfyMovieClip (frames:*, fps:int = 0) {
+            if(typeof frames === 'string'){
+                this._id = frames;
+                this.fps = fps;
+            }else{
+                var textures:Vector.<Texture> = new Vector.<Texture>;
+                var t:Texture;
+                var frame:Rectangle;
+                var region:Rectangle;
+                var i:int;
+                var maxW:Number = 0, maxH:Number = 0;
 
-            var name:String;
-            for (var i:int = 0; i < frames.length; i++) {
-                name = frames[i].label ? frames[i].label : 'default';
+                this._id = new Date().getTime().toString();
+                this.fps = fps > 0 ? fps : Starling.current.nativeStage.frameRate;
 
-                if(!this._data[name]){ this._data[name] = new Vector.<Object>(); }
+                AssetfyMovieClip._data[this._id] = new Dictionary;
 
-                frames[i].image = Image.fromBitmap(frames[i].bm, false, Starling.contentScaleFactor);
-                delete frames[i].bm;
+                for (i = 0; i < frames.length; i++) {
+                    maxW = Math.max(maxW, frames[i].bm.width);
+                    maxH = Math.max(maxH, frames[i].bm.height);
+                }
 
-                this._data[name].push(i);
+                var name:String;
+                for (i = 0; i < frames.length; i++) {
+                    name = frames[i].label ? frames[i].label : 'default';
+
+                    if(!AssetfyMovieClip._data[this._id][name]){ AssetfyMovieClip._data[this._id][name] = new Vector.<int>; }
+
+                    frame   = new Rectangle(0, 0, frames[i].bm.width, frames[i].bm.height);
+                    region  = new Rectangle(-frames[i].coordinates.pivotX, -frames[i].coordinates.pivotY, maxW, maxH);
+                    t       = Texture.fromBitmap(frames[i].bm, false, false, Starling.contentScaleFactor);
+
+                    textures.push(Texture.fromTexture(t, frame, region));
+
+                    AssetfyMovieClip._data[this._id][name].push(i);
+                }
+
+                AssetfyMovieClip._data[this._id]['frames'] = textures.concat();
             }
 
-            this._data.frames = frames;
+			super( AssetfyMovieClip._data[this._id]['frames'][0]);
+        }
+
+        public function clone ():AssetfyMovieClip {
+            return new AssetfyMovieClip(this._id, this.fps);
         }
 
         public function loop (name:String, fps:int = 0):void {
@@ -98,15 +130,7 @@ package assetfy.display {
             this.animation = name;
             this.index = index;
 
-            if(this._view) { this.removeChild(this._view); }
-
-            var current:Object = this._data.frames[this._data[this.animation][this.index]];
-            this._view = current.image;
-
-            this._view.x = current.coordinates.pivotX;
-            this._view.y = current.coordinates.pivotY;
-
-            this.addChild(this._view);
+			texture = AssetfyMovieClip._data[this._id]['frames'][AssetfyMovieClip._data[this._id][this.animation][this.index]];
         }
 
         public function advanceTime(passedTime:Number):void {
@@ -119,7 +143,7 @@ package assetfy.display {
 
                 this.index++;
 
-                if(this.index < this._data[this.animation].length){
+                if(this.index < AssetfyMovieClip._data[this._id][this.animation].length){
                     this.goTo(this.animation, this.index);
                 }else if(this._loop){
                     this.index = 0;

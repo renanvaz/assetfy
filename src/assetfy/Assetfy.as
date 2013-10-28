@@ -37,7 +37,7 @@
         public static function me (mc:MovieClip, type:String = 'bitmap'):* {
             switch (type) {
                 case Assetfy.type.ASSETFY_MOVIECLIP:
-                    return new AssetfyMovieClip(Assetfy.getArrayFrames(mc));
+                    return new AssetfyMovieClip(Assetfy.toSpriteSheet(mc));
                 break;
                 case Assetfy.type.TEXTURE_ATLAS:
                     var map:Object = Assetfy.toSpriteSheet(mc),

@@ -8,11 +8,14 @@ package
 	import flash.ui.Multitouch;
 	import flash.ui.MultitouchInputMode;
 	import starling.core.Starling;
+	import starling.utils.HAlign;
+    import starling.utils.VAlign;
 	
 	/**
 	 * ...
 	 * @author Renan Vaz
 	 */
+	[SWF(width="640", height="960", frameRate="60", backgroundColor="#000000")]
 	public class Main extends Sprite 
 	{
 		public var _starling:Starling;
@@ -27,6 +30,7 @@ package
 			
 			this._starling = new Starling(Init, this.stage);
 			this._starling.enableErrorChecking = false;
+			this._starling.showStatsAt(HAlign.RIGHT, VAlign.BOTTOM);
 			this._starling.start();
 		}
 		

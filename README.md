@@ -126,6 +126,8 @@ assetfyMc.resume();
 
 // You can stop the current animation (reset frame index)
 assetfyMc.stop();
+
+// If you have various equal MovieClips, use the "clone" method, its solve a lot memory and performance is
 ```
 
 ### Why AssetfyMovieClip is not simply called MoiveClip?

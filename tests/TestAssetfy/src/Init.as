@@ -11,6 +11,9 @@ package
 	import starling.textures.Texture;
 	import starling.textures.TextureAtlas;
 	
+	import com.greensock.TweenMax;
+	import com.greensock.easing.ExpoInOut;
+	
 	public class Init extends Sprite
 	{
 		public function Init()
@@ -20,28 +23,46 @@ package
 		
 		public function onAdded():void {
 			var test:String = Assetfy.type.ASSETFY_MOVIECLIP;
-			var mc:MCExample = new MCExample;
+			var mc:MCExample2 = new MCExample2;
+			var mBase:*;
 			var m:*;
+			mc.scaleX = mc.scaleY = .3;
 			
 			switch(test) {
 				case Assetfy.type.ASSETFY_MOVIECLIP:
-					m = Assetfy.me(mc, Assetfy.type.ASSETFY_MOVIECLIP);
-					m.x = m.y = Starling.current.stage.stageWidth/2;
-					addChild(m);
+					for (var i = 0; i < 40; i++){
+						m = Assetfy.me(mc, Assetfy.type.ASSETFY_MOVIECLIP);
+						m.x = 30 * i;
+						// m.play('default').onComplete(function():void { trace('Animation complete'); } );
+						
+						// TweenMax.to(m, 1, {y: 300, delay: 1 * i, ease: ExpoInOut.ease, repeat:1, yoyo:true});
+						m.loop('default');
+						addChild(m);
+					}
 					
-					m.play('default').onComplete(function():void { trace('Animation complete'); });
-					// m.loop('default');
+					/*
+					mBase = Assetfy.me(mc, Assetfy.type.ASSETFY_MOVIECLIP);
+					for (var i = 0; i < 40; i++){
+						m = mBase.clone();
+						m.x = 30 * i;
+						// m.play('default').onComplete(function():void { trace('Animation complete'); } );
+						
+						// TweenMax.to(m, 1, {y: 300, delay: 1 * i, ease: ExpoInOut.ease, repeat:1, yoyo:true});
+						m.loop('default');
+						addChild(m);
+					}
+					*/
 				break;
-				case Assetfy.type.TEXTURE_ATLAS:
-					var t:TextureAtlas = Assetfy.me(mc, Assetfy.type.TEXTURE_ATLAS);
-					m = new MovieClip(t.getTextures('default'), Starling.current.nativeStage.frameRate);
-					m.x = m.y = Starling.current.stage.stageWidth/2;
-					m.loop = false;
-					
-					m.addEventListener(Event.COMPLETE, function():void { trace('Animation complete') });
-					
-					Starling.juggler.add(m);
-					addChild(m);
+
+			case Assetfy.type.TEXTURE_ATLAS:
+					for (var i = 0; i < 40; i++){
+						var t:TextureAtlas = Assetfy.me(mc, Assetfy.type.TEXTURE_ATLAS);
+						m = new MovieClip(t.getTextures('default'), Starling.current.nativeStage.frameRate);
+						m.x = 30 * i;
+						
+						Starling.juggler.add(m);
+						addChild(m);
+					}
 				break;
 			}
 
