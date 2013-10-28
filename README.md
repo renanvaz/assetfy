@@ -28,7 +28,7 @@ Starling.juggler.add(starlingMc);
 addChild(starlingMc);
 ```
 
-
+**Assetfy is helpful for automate spritesheets for yours character animations and not useful for complex animations like "history video".**
 
 ### Features
 You can convert the MovieClip to any formats:

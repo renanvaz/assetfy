@@ -63,22 +63,10 @@
             }
         }
 
-        private static function getArrayFrames (container:MovieClip):Vector.<Object> {
-            var c:Vector.<Object> = new Vector.<Object>();
-
-            for (var i:int = 0; i < container.totalFrames; i++) {
-                container.gotoAndStop(i + 1);
-                c.push(Assetfy.toBitmap(container));
-            }
-
-            return c;
-        }
-
         /**
          * Convert all frames into a single bitmap
          * @param  container: MovieClip
          * @return  {bm:Bitmap, coordinates:Object }
-         *                      coordinates {x: 0, y: 0, width: 0, height: 0}
          */
         private static function toSpriteSheet (container:MovieClip):Object {
             var c:Vector.<Object>   = new Vector.<Object>(),
@@ -144,7 +132,7 @@
                 name:String,
                 label:String;
 
-			container.x = container.y = 0;
+            container.x = container.y = 0;
 
             s.addChild(container);
 

@@ -23,41 +23,42 @@ package
 		
 		public function onAdded():void {
 			var test:String = Assetfy.type.ASSETFY_MOVIECLIP;
-			var mc:MCExample2 = new MCExample2;
+			var mc:EteTest = new EteTest;
 			var mBase:*;
 			var m:*;
-			mc.scaleX = mc.scaleY = .3;
+			mc.scaleX = mc.scaleY = .5;
 			
 			switch(test) {
 				case Assetfy.type.ASSETFY_MOVIECLIP:
-					for (var i = 0; i < 40; i++){
+					/*for (var i = 0; i < 40; i++){
 						m = Assetfy.me(mc, Assetfy.type.ASSETFY_MOVIECLIP);
 						m.x = 30 * i;
 						// m.play('default').onComplete(function():void { trace('Animation complete'); } );
 						
-						TweenMax.to(m, 1, {y: 300, delay: .2 * i, ease: ExpoInOut.ease, repeat:1, yoyo:true});
+						//TweenMax.to(m, 1, {y: 300, delay: .2 * i, ease: ExpoInOut.ease, repeat:1, yoyo:true});
 						m.loop('default');
 						addChild(m);
-					}
+					}*/
 					
-					/*
+					
 					mBase = Assetfy.me(mc, Assetfy.type.ASSETFY_MOVIECLIP);
-					for (var i = 0; i < 40; i++){
+					for (var i = 0; i < 5; i++){
 						m = mBase.clone();
-						m.x = 30 * i;
+						m.x = 120 * i;
+						m.y = 100;
 						// m.play('default').onComplete(function():void { trace('Animation complete'); } );
 						
 						// TweenMax.to(m, 1, {y: 300, delay: 1 * i, ease: ExpoInOut.ease, repeat:1, yoyo:true});
-						m.loop('default');
+						m.loop('fall');
 						addChild(m);
 					}
-					*/
+					
 				break;
 
 			case Assetfy.type.TEXTURE_ATLAS:
 					for (var i = 0; i < 40; i++){
 						var t:TextureAtlas = Assetfy.me(mc, Assetfy.type.TEXTURE_ATLAS);
-						m = new MovieClip(t.getTextures('default'), Starling.current.nativeStage.frameRate);
+						m = new MovieClip(t.getTextures('fall'), Starling.current.nativeStage.frameRate);
 						m.x = 30 * i;
 						
 						Starling.juggler.add(m);
