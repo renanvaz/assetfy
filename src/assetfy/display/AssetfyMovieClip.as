@@ -37,8 +37,8 @@ package assetfy.display {
                 this._id = spriteSheet;
                 this.fps = fps;
             }else{
-                var textures:Vector.<Texture> = new Vector.<Texture>;
                 var t:Texture = Texture.fromBitmap(spriteSheet.bm, false, false, Starling.contentScaleFactor);
+                var frames:Vector.<Texture> = new Vector.<Texture>;
                 var frame:Rectangle;
                 var region:Rectangle;
                 var i:int;
@@ -64,12 +64,12 @@ package assetfy.display {
                     frame   = new Rectangle(coordinates.x, coordinates.y, coordinates.width, coordinates.height);
                     region  = new Rectangle(coordinates.frameX, coordinates.frameY, maxW, maxH);
 
-                    textures.push(Texture.fromTexture(t, frame, region));
+                    frames.push(Texture.fromTexture(t, frame, region));
 
                     AssetfyMovieClip._data[this._id][coordinates.label].push(i);
                 }
 
-                AssetfyMovieClip._data[this._id]['frames'] = textures;
+                AssetfyMovieClip._data[this._id]['frames'] = frames;
             }
 
             super( AssetfyMovieClip._data[this._id]['frames'][0]);

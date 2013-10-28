@@ -127,7 +127,16 @@ assetfyMc.resume();
 // You can stop the current animation (reset frame index)
 assetfyMc.stop();
 
-// If you have various equal MovieClips, use the "clone" method, its solve a lot memory and performance is
+// If you have various equal MovieClips, use the "clone" method, its solve a lot of memory and performance is much better
+var assetfyMcBase:AssetfyMovieClip,
+    assetfyMc:AssetfyMovieClip;
+
+assetfyMcBase = Assetfy.me(mc, Assetfy.type.ASSETFY_MOVIECLIP);
+for (var i = 0; i < 40; i++){
+    assetfyMc = assetfyMcBase.clone();
+    assetfyMc.loop('default');
+    addChild(m);
+}
 ```
 
 ### Why AssetfyMovieClip is not simply called MoiveClip?
