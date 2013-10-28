@@ -93,8 +93,7 @@
                 rowHMax:int         = 0,
                 mc:MovieClip        = new MovieClip,
                 data:Object,
-                bm:Bitmap,
-                name:String;
+                bm:Bitmap;
 
             // Feature: create a mosaic logic (retalgle packing)
 
@@ -127,7 +126,7 @@
                 x += bm.width + Assetfy.padding;
                 rowHMax = Math.max(rowHMax, bm.height);
 
-                c.push({name: data.name, x: bm.x, y: bm.y, width: bm.width, height: bm.height, frameX: -data.coordinates.pivotX, frameY: -data.coordinates.pivotY, frameWidth: wMax, frameHeight: hMax});
+                c.push({name: data.name, label: data.label, x: bm.x, y: bm.y, width: bm.width, height: bm.height, frameX: -data.coordinates.pivotX, frameY: -data.coordinates.pivotY, frameWidth: wMax, frameHeight: hMax});
             }
 
             data = Assetfy.toBitmap(mc);
@@ -142,7 +141,8 @@
                 bm:Bitmap,
                 bmd:BitmapData,
                 rect:Rectangle,
-                name:String;
+                name:String,
+                label:String;
 
 			container.x = container.y = 0;
 
@@ -158,10 +158,10 @@
             bm = new Bitmap(bmd);
             bm.smoothing = true;
 
-            name = StringHelper.padLeft(container.currentFrame.toString(), '0', 3);
-            name = container.currentLabel ? container.currentLabel + '_' + name : 'default_' + name;
+            label = container.currentLabel ? container.currentLabel : 'default';
+            name = label + '_' + StringHelper.padLeft(container.currentFrame.toString(), '0', 3);
 
-            return {bm: bm, name: name, frame: container.currentFrame, label: container.currentLabel, coordinates: {pivotX: rect.x, pivotY: rect.y}};
+            return {bm: bm, name: name, frame: container.currentFrame, label: label, coordinates: {pivotX: rect.x, pivotY: rect.y}};
         }
 
     }
