@@ -22,13 +22,21 @@ package
 		}
 		
 		public function onAdded():void {
-			var test:String = Assetfy.type.ASSETFY_MOVIECLIP;
+			var test:String = 'childs';
 			var mc:EteTest = new EteTest;
+			var container:containerTest = new containerTest;
 			var mBase:*;
 			var m:*;
+			var i:int;
 			mc.scaleX = mc.scaleY = .5;
 			
 			switch(test) {
+				case 'childs':
+					var convertedChilds:Object = Assetfy.childs(container);
+					
+					addChild(convertedChilds.assetfyMovieClip);
+					convertedChilds.assetfyMovieClip.loop('default', 24);
+				break;
 				case Assetfy.type.ASSETFY_MOVIECLIP:
 					/*for (var i = 0; i < 40; i++){
 						m = Assetfy.me(mc, Assetfy.type.ASSETFY_MOVIECLIP);
@@ -40,9 +48,8 @@ package
 						addChild(m);
 					}*/
 					
-					
 					mBase = Assetfy.me(mc, Assetfy.type.ASSETFY_MOVIECLIP);
-					for (var i = 0; i < 5; i++){
+					for (i = 0; i < 5; i++){
 						m = mBase.clone();
 						m.x = 120 * i;
 						m.y = 100;
@@ -52,11 +59,9 @@ package
 						m.loop('fall');
 						addChild(m);
 					}
-					
 				break;
-
-			case Assetfy.type.TEXTURE_ATLAS:
-					for (var i = 0; i < 40; i++){
+				case Assetfy.type.TEXTURE_ATLAS:
+					for (i = 0; i < 40; i++){
 						var t:TextureAtlas = Assetfy.me(mc, Assetfy.type.TEXTURE_ATLAS);
 						m = new MovieClip(t.getTextures('fall'), Starling.current.nativeStage.frameRate);
 						m.x = 30 * i;

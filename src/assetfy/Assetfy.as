@@ -1,4 +1,4 @@
-﻿package assetfy {
+package assetfy {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObjectContainer;
@@ -6,9 +6,11 @@
 	import flash.display.Sprite;
 	import flash.geom.Matrix;
 	import flash.geom.Rectangle;
+    import flash.utils.getQualifiedClassName;
+    import flash.utils.getQualifiedSuperclassName;
 
-	import assetfy.display.AssetfyMovieClip;
-	import assetfy.util.StringHelper;
+    import assetfy.display.AssetfyMovieClip;
+    import assetfy.util.StringHelper;
 
 	import starling.core.Starling;
 	import starling.display.Image;
@@ -29,9 +31,32 @@
         public function Assetfy() {}
 
         public static function childs (container:DisplayObjectContainer):Object {
-            return {
-                mcToConvert: ''
-            };
+            var returnData:Object = {};
+            var child:*;
+
+            for(var i:int = 0; i < container.numChildren; i++){
+                child = container.getChildAt(i);
+
+                switch(getQualifiedSuperclassName(child)){
+                    case 'assetfy.type::Bitmap':
+                        returnData[child.name] = Assetfy.me(child, Assetfy.type.BITMAP);
+                    break;
+                    case 'assetfy.type::Texture':
+                        returnData[child.name] = Assetfy.me(child, Assetfy.type.TEXTURE);
+                    break;
+                    case 'assetfy.type::Image':
+                        returnData[child.name] = Assetfy.me(child, Assetfy.type.IMAGE);
+                    break;
+                    case 'assetfy.type::TextureAtlas':
+                        returnData[child.name] = Assetfy.me(child, Assetfy.type.TEXTURE_ATLAS);
+                    break;
+                    case 'assetfy.type::AssetfyMovieClip':
+                        returnData[child.name] = Assetfy.me(child, Assetfy.type.ASSETFY_MOVIECLIP);
+                    break;
+                }
+            }
+
+            return returnData;
         }
 
         public static function me (mc:MovieClip, type:String = 'bitmap'):* {
@@ -41,9 +66,10 @@
                 break;
                 case Assetfy.type.TEXTURE_ATLAS:
                     var map:Object = Assetfy.toSpriteSheet(mc),
-                        xmlText:String = '';
+                        xmlText:String = '',
+                        i:Object;
 
-                    for each(var i:Object in map.coordinates){
+                    for each(i in map.coordinates){
                         xmlText += '<SubTexture name="' + i.name + '" x="' + i.x +'" y="' + i.y + '" width="' + i.width + '" height="' + i.height + '" frameX="' + i.frameX + '" frameY="' + i.frameY + '" frameWidth="' + i.frameWidth + '" frameHeight="' + i.frameHeight + '" />';
                     }
 
@@ -81,11 +107,12 @@
                 rowHMax:int         = 0,
                 mc:MovieClip        = new MovieClip,
                 data:Object,
-                bm:Bitmap;
+                bm:Bitmap,
+                i:int;
 
             // Feature: create a mosaic logic (retalgle packing)
 
-            for (var i:int = 0; i < container.totalFrames; i++) {
+            for (i = 0; i < container.totalFrames; i++) {
                 container.gotoAndStop(i + 1);
 
                 wMax = Math.ceil(Math.max(container.width, wMax));
@@ -125,6 +152,7 @@
         private static function toBitmap (container:MovieClip):Object {
             var w:Number = Math.ceil(container.width),
                 h:Number = Math.ceil(container.height),
+                p:* = container.parent,
                 s:Sprite =  new Sprite,
                 bm:Bitmap,
                 bmd:BitmapData,
@@ -148,6 +176,8 @@
 
             label = container.currentLabel ? container.currentLabel : 'default';
             name = label + '_' + StringHelper.padLeft(container.currentFrame.toString(), '0', 3);
+
+            if(p){ p.addChild(container); }
 
             return {bm: bm, name: name, frame: container.currentFrame, label: label, coordinates: {pivotX: rect.x, pivotY: rect.y}};
         }

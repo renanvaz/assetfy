@@ -55,6 +55,7 @@
   <libraryPaths>
     <element path="lib\starling.swc" />
     <element path="lib\MCExample.swc" />
+    <element path="lib\childsTest.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>
