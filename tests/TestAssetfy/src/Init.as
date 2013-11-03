@@ -11,9 +11,6 @@ package
 	import starling.textures.Texture;
 	import starling.textures.TextureAtlas;
 	
-	import com.greensock.TweenMax;
-	import com.greensock.easing.ExpoInOut;
-	
 	public class Init extends Sprite
 	{
 		public function Init()
@@ -43,7 +40,6 @@ package
 						m.x = 30 * i;
 						// m.play('default').onComplete(function():void { trace('Animation complete'); } );
 						
-						//TweenMax.to(m, 1, {y: 300, delay: .2 * i, ease: ExpoInOut.ease, repeat:1, yoyo:true});
 						m.loop('default');
 						addChild(m);
 					}*/
@@ -55,7 +51,6 @@ package
 						m.y = 100;
 						// m.play('default').onComplete(function():void { trace('Animation complete'); } );
 						
-						// TweenMax.to(m, 1, {y: 300, delay: 1 * i, ease: ExpoInOut.ease, repeat:1, yoyo:true});
 						m.loop('fall');
 						addChild(m);
 					}
