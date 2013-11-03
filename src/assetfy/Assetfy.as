@@ -18,6 +18,8 @@ package assetfy {
 	import starling.textures.TextureAtlas;
 
     public class Assetfy {
+        public static const VERSSION:String = 'v1.2';
+
         public static const type:Object = {
             BITMAP:             'bitmap',
             TEXTURE:            'texture',
