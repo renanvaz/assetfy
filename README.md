@@ -31,11 +31,11 @@ addChild(starlingMc);
 
 ### Features
 
-- Acept filters
-- Acept color effects
-- SpriteSheets is generated with a retangle paking algorithm
-- Assetfy self implementation of a MovieClip Class API
-- Simple API usage
+- Acept filters.
+- Acept color effects.
+- SpriteSheets is generated with a retangle paking algorithm.
+- Assetfy has a self implementation of a MovieClip Class API.
+- Simple API usage.
 
 You can convert the MovieClip to any formats:
 
@@ -74,6 +74,7 @@ Assetfy.types.ASSETFY_MOVIECLIP
 ```
 
 ### The Assetfy.me method
+Convert the current object to one of the output formats.
 
 ```actionscript
 var mc:MyFlashMovieClip = new MyFlashMovieClip;
@@ -95,7 +96,10 @@ var bm:Bitmap = Assetfy.me(mc, Assetfy.types.BITMAP);
 ```
 
 ### The Assetfy.childs method
-    // Documentation is comming...
+Convert all the childs of the current object to one of the output formats.
+Each MovieClip in linkage should implement a class that extends one of the options of assetfy.type package.
+
+    // More documentation is comming...
 
 ### The AssetfyMovieClip object (minimalist API)
 ```actionscript
