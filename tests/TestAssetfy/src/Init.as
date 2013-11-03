@@ -49,7 +49,6 @@ package
 						m = mBase.clone();
 						m.x = 120 * i;
 						m.y = 100;
-						// m.play('default').onComplete(function():void { trace('Animation complete'); } );
 						
 						m.loop('fall');
 						addChild(m);

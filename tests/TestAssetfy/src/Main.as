@@ -15,13 +15,13 @@ package
 	 * ...
 	 * @author Renan Vaz
 	 */
-	[SWF(width="640", height="960", frameRate="60", backgroundColor="#000000")]
+	[SWF(width="640", height="960", frameRate="60", backgroundColor="#cccccc")]
 	public class Main extends Sprite 
 	{
 		public var _starling:Starling;
 		
 		public function Main():void 
-		{
+		{	
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align = StageAlign.TOP_LEFT;
 			

@@ -31,6 +31,13 @@ addChild(starlingMc);
 **Assetfy is helpful for automate spritesheets for yours character animations and not useful for complex animations like "history video".**
 
 ### Features
+
+- Acept filters
+- Acept color effects
+- SpriteSheets is generated with a retangle paking algorithm
+- Assetfy self implementation of a MovieClip Class API
+- Simple API usage
+
 You can convert the MovieClip to any formats:
 
 ```actionscript
@@ -40,6 +47,7 @@ Image               (starling.dysplay.Image)
 TextureAtlas        (starling.textures.TextureAtlas)
 AssetfyMovieClip    (assetfy.display.AssetfyMovieClip)
 ```
+
 
 ### Requirements
 You need to add the Starling lib in your project.

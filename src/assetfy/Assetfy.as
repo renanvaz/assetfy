@@ -6,11 +6,11 @@ package assetfy {
 	import flash.display.Sprite;
 	import flash.geom.Matrix;
 	import flash.geom.Rectangle;
-    import flash.utils.getQualifiedClassName;
     import flash.utils.getQualifiedSuperclassName;
 
     import assetfy.display.AssetfyMovieClip;
     import assetfy.util.StringHelper;
+    import assetfy.util.RetanglePacker;
 
 	import starling.core.Starling;
 	import starling.display.Image;
@@ -25,8 +25,6 @@ package assetfy {
             TEXTURE_ATLAS:      'texture_atlas',
             ASSETFY_MOVIECLIP:  'assetfy_movieclip'
         }
-
-        public static var padding:int = 6;
 
         public function Assetfy() {}
 
@@ -95,58 +93,56 @@ package assetfy {
          * @return  {bm:Bitmap, coordinates:Object }
          */
         private static function toSpriteSheet (container:MovieClip):Object {
-            var c:Vector.<Object>   = new Vector.<Object>(),
-                limitX:int          = Math.ceil(Math.sqrt(container.totalFrames)),
-                x:Number            = 0,
-                y:Number            = 0,
-                wMax:Number         = 0,
-                hMax:Number         = 0,
-                wMaxFrame:Number    = 0,
-                hMaxFrame:Number    = 0,
-                yIndex:int          = 0,
-                rowHMax:int         = 0,
-                mc:MovieClip        = new MovieClip,
+            var coordinates:Vector.<Object> = new Vector.<Object>(),
+                coordinate:Object       = {},
+                wMax:Number             = 0,
+                hMax:Number             = 0,
+                mc:MovieClip            = new MovieClip,
+                packer:RetanglePacker   = new RetanglePacker(2048, 2048),
+                blocks:Vector.<Object>  = new Vector.<Object>,
+                block:Object,
                 data:Object,
                 bm:Bitmap,
                 i:int;
-
-            // Feature: create a mosaic logic (retalgle packing)
-
-            for (i = 0; i < container.totalFrames; i++) {
-                container.gotoAndStop(i + 1);
-
-                wMax = Math.ceil(Math.max(container.width, wMax));
-                hMax = Math.ceil(Math.max(container.height, hMax));
-            }
-
-            if(limitX * wMax > 2048){ limitX = Math.floor(2048 / wMax); }
 
             for (i = 0; i < container.totalFrames; i++) {
                 container.gotoAndStop(i + 1);
                 data = Assetfy.toBitmap(container);
 
-                if(yIndex != Math.floor(i/limitX)){
-                    yIndex = Math.floor(i/limitX);
+                blocks.push({frame: i, w: data.bm.width, h: data.bm.height, bm: data.bm, coordinates: {name: data.name, label: data.label, frameX: -data.coordinates.pivotX, frameY: -data.coordinates.pivotY}});
 
-                    x = 0;
-                    y += rowHMax + Assetfy.padding;
-                    rowHMax = 0;
+                wMax = Math.ceil(Math.max(data.bm.width, wMax));
+                hMax = Math.ceil(Math.max(data.bm.height, hMax));
+
+                coordinates.push({});
+            }
+
+            blocks.sort(RetanglePacker.sort.maxside);
+            packer.fit(blocks);
+
+            for (i = 0; i < container.totalFrames; i++) {
+                block = blocks[i];
+                if (block.fit) {
+                    bm = block.bm;
+                    bm.x = block.fit.x;
+                    bm.y = block.fit.y;
+                    mc.addChild(bm);
+
+                    coordinate             = block.coordinates;
+                    coordinate.x           = bm.x;
+                    coordinate.y           = bm.y;
+                    coordinate.width       = bm.width;
+                    coordinate.height      = bm.height;
+                    coordinate.frameWidth  = wMax;
+                    coordinate.frameHeight = hMax;
+
+                    coordinates[block.frame] = coordinate;
                 }
-
-                bm = data.bm;
-                bm.x = x;
-                bm.y = y;
-                mc.addChild(bm);
-
-                x += bm.width + Assetfy.padding;
-                rowHMax = Math.max(rowHMax, bm.height);
-
-                c.push({name: data.name, label: data.label, x: bm.x, y: bm.y, width: bm.width, height: bm.height, frameX: -data.coordinates.pivotX, frameY: -data.coordinates.pivotY, frameWidth: wMax, frameHeight: hMax});
             }
 
             data = Assetfy.toBitmap(mc);
 
-            return {bm: data.bm, coordinates: c};
+            return {bm: data.bm, coordinates: coordinates};
         }
 
         private static function toBitmap (container:MovieClip):Object {
