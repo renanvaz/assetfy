@@ -28,7 +28,6 @@ Starling.juggler.add(starlingMc);
 addChild(starlingMc);
 ```
 
-**Assetfy is helpful for automate spritesheets for yours character animations and not useful for complex animations like "history video".**
 
 ### Features
 
@@ -48,6 +47,7 @@ TextureAtlas        (starling.textures.TextureAtlas)
 AssetfyMovieClip    (assetfy.display.AssetfyMovieClip)
 ```
 
+**Assetfy is helpful for automate spritesheets for character animations and flatten layout components. Not is useful for complex animations like "history video".**
 
 ### Requirements
 You need to add the Starling lib in your project.
