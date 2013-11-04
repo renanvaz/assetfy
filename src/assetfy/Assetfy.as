@@ -25,7 +25,8 @@ package assetfy {
             TEXTURE:            'texture',
             IMAGE:              'image',
             TEXTURE_ATLAS:      'texture_atlas',
-            ASSETFY_MOVIECLIP:  'assetfy_movieclip'
+            ASSETFY_MOVIECLIP:  'assetfy_movieclip',
+            SPRITE_SHEET:       'assetfy_movieclip'
         }
 
         public function Assetfy() {}
@@ -61,6 +62,9 @@ package assetfy {
 
         public static function me (mc:MovieClip, type:String = 'bitmap'):* {
             switch (type) {
+                case Assetfy.type.SPRITE_SHEET:
+                    return Assetfy.toSpriteSheet(mc);
+                break;
                 case Assetfy.type.ASSETFY_MOVIECLIP:
                     return new AssetfyMovieClip(Assetfy.toSpriteSheet(mc));
                 break;

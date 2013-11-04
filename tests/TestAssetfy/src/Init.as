@@ -7,6 +7,7 @@ package
 	import starling.core.Starling;
 	import starling.display.MovieClip;
 	import starling.display.Sprite;
+	import starling.display.Image;
 	import starling.events.Event;
 	import starling.textures.Texture;
 	import starling.textures.TextureAtlas;
@@ -19,7 +20,7 @@ package
 		}
 		
 		public function onAdded():void {
-			var test:String = 'childs';
+			var test:String = Assetfy.type.SPRITE_SHEET;
 			var mc:EteTest = new EteTest;
 			var container:containerTest = new containerTest;
 			var mBase:*;
@@ -30,9 +31,16 @@ package
 			switch(test) {
 				case 'childs':
 					var convertedChilds:Object = Assetfy.childs(container);
-					
+					convertedChilds.image.x = 100;
+					addChild(convertedChilds.image);
 					addChild(convertedChilds.assetfyMovieClip);
 					convertedChilds.assetfyMovieClip.loop('default', 24);
+				break;
+				case Assetfy.type.SPRITE_SHEET:
+					var ss:Object = Assetfy.me(mc, Assetfy.type.SPRITE_SHEET);
+					var img = Image.fromBitmap(ss.bm);
+					img.width = 640; img.scaleY = img.scaleX;
+					addChild(img);
 				break;
 				case Assetfy.type.ASSETFY_MOVIECLIP:
 					/*for (var i = 0; i < 40; i++){

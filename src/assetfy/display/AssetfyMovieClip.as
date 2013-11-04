@@ -150,7 +150,7 @@ package assetfy.display {
                 }else {
                     this.stop();
 
-                    if (this._onComplete) { this._onComplete.call(this); this._onComplete = null; }
+                    if (Boolean(this._onComplete)) { this._onComplete.call(this); this._onComplete = null; }
                 }
 
                 if (diffTime > 0) {

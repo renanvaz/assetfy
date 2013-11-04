@@ -39,7 +39,8 @@ package assetfy.util {
             var n:int, node:Object, block:Object;
             for (n = 0; n < blocks.length; n++) {
                 block = blocks[n];
-                if (node = this.findNode(this.canvas, block.w, block.h)){
+				node = this.findNode(this.canvas, block.w, block.h)
+                if (node){
                     block.fit = this.splitNode(node, block.w, block.h);
                 }
             }
