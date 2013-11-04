@@ -31,8 +31,8 @@ addChild(starlingMc);
 
 ### Features
 
-- Acept filters.
-- Acept color effects.
+- Accept filters.
+- Accept color effects.
 - SpriteSheets is generated with a retangle paking algorithm.
 - Assetfy has a self implementation of a MovieClip Class API.
 - Simple API usage.
@@ -151,7 +151,7 @@ for (var i = 0; i < 40; i++){
 }
 ```
 
-### Why AssetfyMovieClip is not simply called MoiveClip?
+### Why AssetfyMovieClip is not simply called MovieClip?
 AssetfyMovieClip has a personal API, so there is no risk of confusion with the Starling MovieClip instance and API.
 
 ## How to prepare the flash MovieClip to be converted by Assetfy?
